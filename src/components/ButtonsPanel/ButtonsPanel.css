@@ -1,0 +1,38 @@
+.buttons-panel__link {
+  font-family: Inter, Arial, sans-serif;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 1.33;
+  cursor: pointer;
+  text-decoration: none;
+
+}
+
+.buttons-panel__link_signin {
+  padding: 8px 20px;
+  background: #3DDC84;
+  border-radius: 3px;
+  margin-left: 30px;
+  border: none;
+
+  color: #000;
+}
+
+.buttons-panel__link_signup {
+  padding: 8px 0;
+  color: #FFF;
+  background: transparent;
+  border: none;
+}
+
+@media screen and (max-width: 700px) {
+  .buttons-panel__link {
+    font-size: 10px;
+    line-height: 1.6;
+  }
+  .buttons-panel__link_signin {
+    padding: 5px 12px;
+    margin-left: 14px;
+  }
+}
