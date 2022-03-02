@@ -1,0 +1,33 @@
+.header {
+  background: #ffffff;
+}
+
+.header_landing {
+  background: #073042;
+}
+
+.header__container {
+  box-sizing: border-box;
+  margin: 0 auto;
+  max-width: 1280px;
+  min-width: 320px;
+  min-height: 74px;
+
+  padding: 0 70px;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+@media screen and (max-width: 1000px) {
+  .header__container {
+    padding: 0 30px;
+  }
+}
+
+@media screen and (max-width: 700px) {
+  .header__container {
+    padding: 0 14px;
+  }
+}
