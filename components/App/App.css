@@ -1,0 +1,5 @@
+.btn-hover:hover {
+  cursor: pointer;
+  opacity: 0.7;
+  transition: 0.6s;
+}
