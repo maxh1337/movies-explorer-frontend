@@ -6,9 +6,10 @@
   margin: 50px 0 80px;
   width: 320px;
   height: 36px;
-  background-color: #2F2F2F;
-  border: none;
-
+  background-color: #202020;
+  border-radius: 5px;
+  border-style:solid;
+  border-color: #424242;
   font-family: Inter, Arial, sans-serif;
   font-style: normal;
   font-weight: 500;
@@ -18,6 +19,11 @@
   color: #FFFFFF;
 }
 
+.movies__more-btn:hover{
+  cursor: pointer;
+  opacity: 0.8;
+  transition: 0.8s;
+}
 @media screen and (max-width: 700px) {
   .movies__more-btn {
     width: 240px;

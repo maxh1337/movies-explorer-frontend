@@ -64,6 +64,11 @@
     margin-bottom: 29px;
 }
 
+.search-form__submit-btn:hover{
+    opacity: 0.8;
+    transition: 0.8s;
+}
+
 .search-form__fieldset:last-of-type {
     border: none;
     padding: 0;

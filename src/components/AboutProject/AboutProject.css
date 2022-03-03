@@ -1,5 +1,6 @@
 .project {
     background: #202020;
+    text-align: left;
 }
 
 .project__container {
@@ -35,9 +36,6 @@
     margin-bottom: 110px;
 }
 
-.project__info-column {
-
-}
 
 .project__info-title {
     font-family: Inter, Arial, sans-serif;

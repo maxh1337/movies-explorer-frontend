@@ -105,3 +105,8 @@
         line-height: 1.25;
     }
 }
+
+.footer__link:hover{
+    opacity: 0.8;
+    transition: 0.8s;
+}
