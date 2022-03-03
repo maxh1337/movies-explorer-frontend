@@ -6,7 +6,7 @@
   margin: 50px 0 80px;
   width: 320px;
   height: 36px;
-  background-color: #ffffff;
+  background-color: #2F2F2F;
   border: none;
 
   font-family: Inter, Arial, sans-serif;
@@ -15,7 +15,7 @@
   font-size: 12px;
   line-height: 15px;
 
-  color: #000000;
+  color: #FFFFFF;
 }
 
 @media screen and (max-width: 700px) {

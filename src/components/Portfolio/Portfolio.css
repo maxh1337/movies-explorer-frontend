@@ -1,6 +1,5 @@
 .portfolio {
-    background: #ffffff;;
-    text-align: left;
+    background: #202020;;
 }
 
 .portfolio__container {
@@ -21,7 +20,7 @@
     /* identical to box height, or 111% */
 
 
-    color: #A0A0A0;
+    color: #8B8B8B;
 
     mix-blend-mode: normal;
     margin: 0 0 42px;
@@ -34,7 +33,7 @@
 }
 
 .portfolio__sites-item {
-    border-bottom: 1px solid #000000;
+    border-bottom: 1px solid #424242;
     padding-bottom: 15px;
     margin-bottom: 15px;
 }
@@ -57,7 +56,7 @@
 
     letter-spacing: -0.04em;
 
-    color: #000000;
+    color: #FFFFFF;
     margin: 0;
     display: flex;
     justify-content: space-between;

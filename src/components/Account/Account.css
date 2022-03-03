@@ -1,9 +1,6 @@
 .account {
     display: flex;
     align-items: center;
-    border-color: #0c0c0c;
-    border-radius: 40px;
-    box-shadow: 0 0 1px 1px;
 }
 
 .account__link {
@@ -12,9 +9,8 @@
     font-weight: 500;
     font-size: 14px;
     line-height: 1.14;
-    margin-left: 5px;
 
-    color: #000000;
+    color: #FFFFFF;
 
     margin-right: 17px;
     text-decoration: none;
@@ -25,14 +21,11 @@
 }
 
 .account__icon {
-    margin-right: 5px;
     height: 30px;
     width: 26px;
     border-radius: 50px;
-    border-color: #F5F5F5;
-    border-style: hidden;
-    
+    border: none;
 
     background-size: 14px 12px;
-    background: #F5F5F5 url(../../images/icon-account.svg) no-repeat center;
+    background: #313131 url(../../images/icon-account.svg) no-repeat center;
 }

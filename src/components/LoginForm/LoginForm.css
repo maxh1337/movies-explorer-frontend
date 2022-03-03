@@ -12,7 +12,7 @@
   font-size: 24px;
   line-height: 29px;
 
-  color: #000000;
+  color: #FFFFFF;
 }
 
 .login-form__label {
@@ -23,33 +23,30 @@
   font-size: 10px;
   line-height: 12px;
 
-  color: #000000;
+  color: #8B8B8B;
   margin-bottom: 5px;
 }
 
 .login-form__input {
-  padding: 10px 10px 10px;
+  padding: 0 0 10px;
   margin-bottom: 24px;
   width: 100%;
   background: transparent;
-  background-color: #F9F9F9;
-
 
   outline: none;
   border: none;
-  border-bottom: 1px solid #F9F9F9;
-  border-radius: 8px;
+  border-bottom: 1px solid #424242;
 
   font-family: Inter, Arial, sans-serif;
   font-style: normal;
   font-weight: normal;
   font-size: 14px;
   line-height: 17px;
-  color: #000000;
+  color: #FFFFFF;
 }
 
 .login-form__input:focus {
-  border-bottom: 1px solid #F9F9F9;
+  border-bottom: 1px solid #4285F4;
 }
 
 .login-form__submit {
@@ -58,7 +55,7 @@
   width: 100%;
   padding: 15px 0 15px;
   margin-bottom: 16px;
-  background: #3456F3;
+  background: #4285F4;
   border-radius: 3px;
   border: none;
 
@@ -84,7 +81,7 @@
 
   text-align: center;
 
-  color: #A0A0A0;
+  color: #8B8B8B;
   margin-right: 6px;
 }
 

@@ -28,7 +28,7 @@
     font-weight: 500;
     font-size: 11px;
     line-height: 13px;
-    color: #424242;
+    color: #FFFFFF;
 }
 
 .profile__form-label {
@@ -37,14 +37,14 @@
     font-weight: 500;
     font-size: 11px;
     line-height: 13px;
-    color: #000000;
+    color: #FFFFFF;
     white-space: nowrap;
 }
 
 .profile__form-field {
     display: flex;
     align-items: center;
-    border-bottom: 1px solid #000000;
+    border-bottom: 1px solid #424242;
     padding-bottom: 16px;
 }
 
@@ -74,7 +74,7 @@
 
     text-align: center;
 
-    color: #000000;
+    color: #FFFFFF;
 
     margin: 0 auto 123px;
 }
@@ -83,6 +83,9 @@
     margin-bottom: 17px;
 }
 
+.profile__form-section:last-of-type {
+    /*margin-bottom: auto;*/
+}
 
 .profile__buttons {
     display: flex;

@@ -18,14 +18,14 @@ function Profile({menuState}) {
             <section className="profile__form-section">
               <div className="profile__form-field">
                 <label className="profile__form-label" htmlFor="name">Имя</label>
-                <input className="profile__form-input" id="name" type="text" placeholder="Имя" value={''}/>
+                <input className="profile__form-input" id="name" type="text" placeholder="Имя" value={'Виталий'}/>
               </div>
               <span className="profile__form-span">Сообщение об ошибке</span>
             </section>
             <section className="profile__form-section">
               <div className="profile__form-field profile__form-field_no-border">
                 <label className="profile__form-label" htmlFor="email">E-mail</label>
-                <input className="profile__form-input" id="email" type="email" placeholder="E-mail" value={''}/>
+                <input className="profile__form-input" id="email" type="email" placeholder="E-mail" value={'pochta@yandex.ru'}/>
               </div>
               <span className="profile__form-span">Сообщение об ошибке</span>
             </section>

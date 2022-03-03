@@ -11,7 +11,7 @@ function AboutMe() {
           <div className="about__column about__column_person">
             <h3 className="about__name">Максим</h3>
             <p className="about__info">Фронтенд-разработчик, 18 лет</p>
-            <p className="about__description">Я&nbsp;родился и&nbsp;живу в&nbsp;Курске, учусь в ЮЗГУ по специальности информационная безопасность.</p>
+            <p className="about__description">Я&nbsp;родился и&nbsp;живу в&nbsp;Курске, учусь на факультете Информационная безопасность в ЮЗГУ.</p>
             <ul className="about__social">
               <li className="about__social-item">
                 <a href="https://vk.com/maxh1336" className="about__social-link" target="_blank" rel="noopener noreferrer">Vkontakte</a>

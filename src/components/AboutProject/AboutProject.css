@@ -1,6 +1,5 @@
 .project {
-    background: #fafafa;
-    text-align: left;
+    background: #202020;
 }
 
 .project__container {
@@ -23,9 +22,9 @@
 
     letter-spacing: -0.04em;
 
-    color: #000000;
+    color: #FFFFFF;
 
-    border-bottom: 1px solid #000000;
+    border-bottom: 1px solid #DADADA;
     margin: 0 0 70px;
     padding-bottom: 20px;
 }
@@ -36,6 +35,9 @@
     margin-bottom: 110px;
 }
 
+.project__info-column {
+
+}
 
 .project__info-title {
     font-family: Inter, Arial, sans-serif;
@@ -45,7 +47,7 @@
     line-height: 1.2;
     letter-spacing: -0.04em;
 
-    color: #000000;
+    color: #FFFFFF;
     margin: 0 0 26px;
 }
 
@@ -58,7 +60,7 @@
     /* or 143% */
 
 
-    color: #000000;
+    color: #FFFFFF;
     margin: 0;
 }
 
