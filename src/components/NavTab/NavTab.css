@@ -3,10 +3,10 @@
     max-width: 1200px;
     background: #272727;
     display: flex;
-    justify-content: center;
+    justify-content:center;
     align-items: center;
-    margin-left: auto;
-    margin-right: auto;
+    margin-left: 40px;
+    margin-right: 40px;
     padding-bottom: 20px;
 }
 
@@ -21,14 +21,15 @@
     width: 96px;
     height: 36px;
     text-decoration: none;
-    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 
     color: #FFFFFF;
     background-color: #303030;
     border-radius: 10px;
-
-    margin: 0 40px 0 0;
-    padding-top: 14px;
+    /* padding-top: 14px; */
+    margin-right: 14px;
 }
 
 .nav-tab__link:last-of-type {
@@ -38,10 +39,20 @@
 @media screen and (max-width: 700px) {
     .nav-tab {
         min-height: 66px;
+        margin-left: 14px;
+        margin-right: 14px;
+        min-width: 292px;
     }
     .nav-tab__link {
-        font-size: 11px;
+        font-size: 12px;
         line-height: 1.45;
-        margin-right: 24px;
+    }
+}
+@media screen and (max-width: 321px) {
+    .nav-tab__link {
+        font-size: 10px;
+        line-height: 1.45;
+        width: 82px;
+        height: 26px;
     }
 }

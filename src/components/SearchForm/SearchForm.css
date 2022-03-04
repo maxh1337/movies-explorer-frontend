@@ -39,6 +39,10 @@
 
 }
 
+.search-form__input:focus{
+    outline: 1px white;
+}
+
 .search-form__submit-btn {
     color: white;
     width: 70px;

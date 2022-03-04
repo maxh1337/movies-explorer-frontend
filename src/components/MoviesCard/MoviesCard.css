@@ -22,7 +22,7 @@
   background-image: url(../../images/icon__isnt-liked.svg);
   background-repeat: no-repeat;
   background-position: center;
-  background-color: #222222;
+  background-color: #313131;
   margin-top: 15px;
   cursor: pointer;
   margin-right: 10px;
@@ -64,9 +64,15 @@
   padding-bottom: 6px;
 }
 
-card__like-btn:hover{
+.card__like-btn:hover{
   opacity: 0.8;
-  transition: 0.8s;
+  transition: 2s;
+  background-color: #3DDC84;
+  background-image: url(../../images/icon__is-liked.svg);
+}
+
+.card__like-btn:active{
+  background-image: url(../../images/icon__is-liked.svg);
 }
 
 @media screen and (max-width: 1000px) {
@@ -75,12 +81,12 @@ card__like-btn:hover{
   }
 }
 
-@media screen and (max-width: 700px) {
+@media screen and (max-width: 768px) {
   .card__wrap {
     margin-bottom: 25px;
   }
   .card__img {
-    height: 168px;
+    height: 190px;
   }
   .card_title {
     font-size: 12px;

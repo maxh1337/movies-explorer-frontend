@@ -6,6 +6,7 @@ function MoviesCard() {
       <div className="card__wrap">
         <h2 className="card_title">33 слова о дизайне</h2>
         <button
+          
           type="button"
           aria-label="Поставить отметку"
           className="card__like-btn"
