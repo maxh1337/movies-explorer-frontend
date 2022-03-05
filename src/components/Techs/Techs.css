@@ -1,5 +1,5 @@
 .techs {
-    background: #272727;
+    background: #202020;
     text-align: left;
 }
 
@@ -13,6 +13,7 @@
     padding: 100px 70px;
     display: flex;
     flex-direction: column;
+    background-color: #202020;
 }
 
 .techs__title {

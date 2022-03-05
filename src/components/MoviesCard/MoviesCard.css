@@ -71,7 +71,11 @@
   background-image: url(../../images/icon__is-liked.svg);
 }
 
-.card__like-btn:active{
+/* .card__like-btn:active{
+  background-image: url(../../images/icon__is-liked.svg);
+} */
+
+.card__like-btn:last-of-type{
   background-image: url(../../images/icon__is-liked.svg);
 }
 
