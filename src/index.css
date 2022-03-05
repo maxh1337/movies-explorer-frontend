@@ -2,7 +2,7 @@
 @import url(./vendor/fonts/fonts.css);
 
 body {
-  background-color: #ffffff;
+  background-color: #202020;
 
   font-family: "Inter", Arial, sans-serif;
   -moz-osx-font-smoothing: grayscale;
@@ -17,4 +17,5 @@ body {
   display: flex;
   flex-direction: column;
   height: 100vh;
+
 }

@@ -21,25 +21,24 @@
     left: 0;
     right: 0;
     bottom: 0;
-    background: #EBEBEB;
+    background-color: #3DDC84;
     border-radius: 20px;
 }
 
-.switcher__span:before {
+.switcher__span::before {
     position: absolute;
     content: "";
     height: 16px;
     width: 16px;
     left: 2px;
     bottom: 2px;
-    background: #2BE080;
     transition: .4s;
-    border: 1px solid white;
+    background-color: #FFFFFF;
     border-radius: 50%;
     box-sizing: border-box;
 }
 
-.switcher__input:checked + .switcher__span:before {
+.switcher__input:checked + .switcher__span::before {
     transform: translateX(16px);
-    background: #2BE080;
+    background-color: #FFFFFF;
 }
