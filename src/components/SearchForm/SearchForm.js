@@ -31,7 +31,7 @@ function SearchForm({findFilms, searchString}) {
               placeholder="Фильм"
               autoComplete="off"
             />
-            <button className="search-form__submit-btn" type="submit" />
+            <button className="search-form__submit-btn" type="submit">Найти</button>
           </fieldset>
           <fieldset className="search-form__fieldset">
             <FilterCheckbox
