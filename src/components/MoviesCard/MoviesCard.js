@@ -22,20 +22,20 @@ function MoviesCard({movie, createMovie, savedMovies, deleteMovie}) {
             onClick={() => deleteMovie(movie)}
             type="button"
             aria-label="Поставить отметку"
-            className={`card__like-btn card__like-btn_delete`}
+            className={`card__like-btn_delete`}
           />
         :
           <button
             onClick={!isSaved(savedMovies, id) ? () => createMovie(movie) : () => deleteMovie(movie)}
             type="button"
             aria-label="Поставить отметку"
-            className={`card__like-btn ${!isSaved(savedMovies, id) ? 'card__like-btn_no-like' : ''}`}
+            className={`card__like-btn ${!isSaved(savedMovies, id) ? 'card__like-btn-liked' : ''}`}
           />
         }
 
       </div>
       <span className="card__duration">{durationToHours(duration)}</span>
-      <a href={trailerLink} target="_blank">
+      <a href={trailerLink} target="_blank" rel="noreferrer">
         <img
           className="card__img"
           src={`${MOVIES_API_URL}${image.url}`}
