@@ -29,7 +29,7 @@ function MoviesCard({movie, createMovie, savedMovies, deleteMovie}) {
             onClick={!isSaved(savedMovies, id) ? () => createMovie(movie) : () => deleteMovie(movie)}
             type="button"
             aria-label="Поставить отметку"
-            className={`card__like-btn ${!isSaved(savedMovies, id) ? 'card__like-btn-liked' : ''}`}
+            className={`card__like-btn ${!isSaved(savedMovies, id) ? 'card__like-btn-notliked' : ''}`}
           />
         }
 
