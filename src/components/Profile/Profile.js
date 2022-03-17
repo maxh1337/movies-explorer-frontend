@@ -7,6 +7,7 @@ import {validationConfig} from "../../utils/constants";
 import {useCallback, useContext, useEffect, useState} from "react";
 import { CurrentUserContext } from '../../contexts/CurrentUserContext';
 import isEmail from "validator/es/lib/isEmail";
+import React from 'react';
 
 function Profile({menuState, onSignOut, updateProfile}) {
   const { values, handleChange, errors, isValid, resetForm } = useFormWithValidation();
@@ -33,6 +34,7 @@ function Profile({menuState, onSignOut, updateProfile}) {
     resetForm({ name, email });
     setOldValues({ name, email });
   }, [name, email])
+
 
   return (
     <>

@@ -48,3 +48,5 @@ function SearchForm({findFilms, searchString}) {
 
 export default SearchForm;
 
+
+

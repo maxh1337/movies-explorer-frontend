@@ -332,6 +332,7 @@ function App() {
 
           <Route path='/sign-up'>
             <Register
+              
               onRegister={handleRegister}
               isFetching={isFetchingFromForm}
             />
@@ -339,6 +340,7 @@ function App() {
 
           <Route path="/sign-in">
             <Login
+              
               onLogin={handleLogin}
               isFetching={isFetchingFromForm}
             />

@@ -65,6 +65,7 @@ function Movies(
           Ещё
         </button>
         }
+        
       </main>
 
       <Footer/>

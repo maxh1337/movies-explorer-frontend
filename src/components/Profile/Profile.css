@@ -41,6 +41,11 @@
     white-space: nowrap;
 }
 
+.profile__btn_disabled {
+    opacity: 0.3;
+    pointer-events: none;
+}
+
 .profile__form-field {
     display: flex;
     align-items: center;
