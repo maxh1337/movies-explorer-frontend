@@ -25,7 +25,7 @@ function App() {
   const [filterLocalStorage, setFilterLocalStorage] = useLocalStorage(LOCAL_STORAGE_KEY_FILTER, {});
   const [filteredMovies, setFilteredMovies] = useState([]);
   const [toShowMovies, setToShowMovies] = useState([]);
-  const [cardsInRow, setCardsInRow] = useState(1);
+  const [cardsInRow, setCardsInRow] = useState(12);
   const [filter, setFilter] = useState({
     name: '',
     shortFilm: false,
