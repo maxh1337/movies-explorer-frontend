@@ -16,6 +16,7 @@ import {LOCAL_STORAGE_KEY_FILTER, LOCAL_STORAGE_KEY_MOVIES, modal} from "../../u
 import moviesApi from "../../utils/MoviesApi";
 import {calcCardsInRow, isShortFilm} from "../../utils/utils";
 import PageNotFound from "../PageNotFound/PageNotFound";
+import { Redirect } from 'react-router-dom';
 
 function App() {
   const history = useHistory();
@@ -41,7 +42,8 @@ function App() {
   const [isFetchingFromForm, setIsFetchingFromForm] = useState(false);
   const [isFetchingError, setIsFetchingError] = useState(false);
   const [once, setOnce] = useState(true);
-  const [isCheckingToken, setIsCheckingToken] = useState(true)
+  const [isCheckingToken, setIsCheckingToken] = useState(true);
+  const [redirect, setRedirect] = useState(false);
 
   useEffect(() => {
     mainApi
@@ -255,6 +257,7 @@ function App() {
         if (data) {
           setCurrentUser(data)
           setLoggedIn(true);
+          setRedirect(true);
           history.push('/movies');
         }
       })
@@ -308,6 +311,7 @@ function App() {
 
           <ProtectedRoute
             path='/saved-movies'
+            isFetching={isFetching}
             loggedIn={loggedIn}
             menuState={menuState}
             component={SavedMovies}
@@ -330,20 +334,26 @@ function App() {
             isCheckingToken={isCheckingToken}
           />
 
-          <Route path='/sign-up'>
-            <Register
-              
+          <Route path='/sign-up' >
+          {loggedIn 
+            ? <Redirect to='/'/>
+            : <Register
+              redirect={redirect}
               onRegister={handleRegister}
               isFetching={isFetchingFromForm}
-            />
+              /> 
+          }
           </Route>
 
           <Route path="/sign-in">
-            <Login
-              
+            {loggedIn 
+            ? <Redirect to='/'/>
+            : <Login
+              redirect={redirect}
               onLogin={handleLogin}
               isFetching={isFetchingFromForm}
-            />
+              />
+            }
           </Route>
 
           <Route>

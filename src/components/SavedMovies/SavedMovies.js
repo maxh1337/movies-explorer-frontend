@@ -8,7 +8,7 @@ import Preloader from "../Preloader/Preloader";
 import {useEffect} from "react";
 import React from 'react';
 
-function SavedMovies({menuState, movies, createMovie, deleteMovie, moveFilterToShow, savedMovies, findFilms, filterForSaved, isLoading}) {
+function SavedMovies({menuState, movies, createMovie, deleteMovie, moveFilterToShow, savedMovies, findFilms, filterForSaved, isFetching, isFetchingError,}) {
 
   useEffect(() => {
     filterForSaved()
@@ -45,7 +45,7 @@ function SavedMovies({menuState, movies, createMovie, deleteMovie, moveFilterToS
 
       <main className="content">
         <SearchForm findFilms={findFilms}/>
-        {isLoading && (<Preloader />)}
+        {isFetching && (<Preloader />)}
         {movies.length > 0
             ? <MoviesCardList
               count={mountCount}
