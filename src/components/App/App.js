@@ -17,6 +17,7 @@ import moviesApi from "../../utils/MoviesApi";
 import {calcCardsInRow, isShortFilm} from "../../utils/utils";
 import PageNotFound from "../PageNotFound/PageNotFound";
 import { Redirect } from 'react-router-dom';
+import React from "react";
 
 function App() {
   const history = useHistory();
@@ -26,7 +27,7 @@ function App() {
   const [filterLocalStorage, setFilterLocalStorage] = useLocalStorage(LOCAL_STORAGE_KEY_FILTER, {});
   const [filteredMovies, setFilteredMovies] = useState([]);
   const [toShowMovies, setToShowMovies] = useState([]);
-  const [cardsInRow, setCardsInRow] = useState(12);
+  const [cardsInRow, setCardsInRow] = useState(3);
   const [filter, setFilter] = useState({
     name: '',
     shortFilm: false,
@@ -38,12 +39,12 @@ function App() {
   const [loggedIn, setLoggedIn] = useState(false);
   const [isOpenModal, setIsOpenModal] = useState(false);
   const [modalConfig, setModalConfig] = useState({});
-  const [isFetching, setIsFetching] = useState(false);
   const [isFetchingFromForm, setIsFetchingFromForm] = useState(false);
   const [isFetchingError, setIsFetchingError] = useState(false);
   const [once, setOnce] = useState(true);
   const [isCheckingToken, setIsCheckingToken] = useState(true);
   const [redirect, setRedirect] = useState(false);
+  const [ isLoading, setLoading ] = React.useState(false);
 
   useEffect(() => {
     mainApi
@@ -159,7 +160,6 @@ function App() {
       return copyFilteredMovies
     });
   }
-
   function findFilms({name, shortFilm}) {
     name = name.trim();
     if (!name) {
@@ -175,7 +175,7 @@ function App() {
         shortFilm
       }));
     } else {
-      setIsFetching(true);
+      setLoading(true);
       setIsFetchingError(false);
       moviesApi.getMovies()
         .then(data => {
@@ -186,7 +186,7 @@ function App() {
           setIsFetchingError(true);
         })
         .finally(() => {
-          setIsFetching(false);
+          setLoading(false);
           setFilter(state => ({
             ...state,
             name,
@@ -294,7 +294,7 @@ function App() {
             loggedIn={loggedIn}
             menuState={menuState}
             component={Movies}
-            isFetching={isFetching}
+            loading={isLoading}
             findFilms={findFilms}
             movies={toShowMovies}
             moveFilterToShow={moveFilterToShow}
@@ -311,7 +311,8 @@ function App() {
 
           <ProtectedRoute
             path='/saved-movies'
-            isFetching={isFetching}
+            moveFilterToShow={moveFilterToShow}
+            loading={isLoading}
             loggedIn={loggedIn}
             menuState={menuState}
             component={SavedMovies}

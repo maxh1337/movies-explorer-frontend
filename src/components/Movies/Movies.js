@@ -7,6 +7,7 @@ import Navigation from "../Navigation/Navigation";
 import Burger from "../Burger/Burger";
 import Preloader from "../Preloader/Preloader";
 import {useEffect} from "react";
+import React from 'react';
 
 function Movies(
   {
@@ -14,6 +15,7 @@ function Movies(
     isFetching,
     findFilms,
     movies,
+    isLoading,
     moveFilterToShow,
     filteredMovies,
     isFetchingError,
@@ -39,7 +41,7 @@ function Movies(
       <main className="content">
         <SearchForm findFilms={findFilms} searchString={searchString}/>
 
-        {isFetching && <Preloader/>}
+        {isLoading && <Preloader/>}
         {isFetchingError
           ? <>
             <p>Во время запроса произошла ошибка.</p>

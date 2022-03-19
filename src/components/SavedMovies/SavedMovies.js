@@ -8,35 +8,13 @@ import Preloader from "../Preloader/Preloader";
 import {useEffect} from "react";
 import React from 'react';
 
-function SavedMovies({menuState, movies, createMovie, deleteMovie, moveFilterToShow, savedMovies, findFilms, filterForSaved, isFetching, isFetchingError,}) {
+function SavedMovies({menuState, movies, createMovie, deleteMovie, isLoading, moveFilterToShow, savedMovies, findFilms, filterForSaved, isFetching, isFetchingError,}) {
 
   useEffect(() => {
     filterForSaved()
   }, [])
 
-  const [ mountCount, setMountcount ] = React.useState(12);
-
-  window.addEventListener("resize", () => {
-    setTimeout(() => {
-      if (window.innerWidth >= 1024) {
-        setMountcount(12);
-      } else if (window.innerWidth >= 480) {
-        setMountcount(8);
-      } else if (window.innerWidth < 480) {
-        setMountcount(5);
-      }
-    }, 5000)
-  });
-
-  const count = () => {
-    if (window.innerWidth >= 1023) {
-      setMountcount(mountCount + 3);
-    } else if (window.innerWidth < 1023) {
-      setMountcount(mountCount + 2);
-    }
-  };
-
-  return (
+return (
     <>
       <Header>
         <Burger menuState={menuState}/>
@@ -45,10 +23,9 @@ function SavedMovies({menuState, movies, createMovie, deleteMovie, moveFilterToS
 
       <main className="content">
         <SearchForm findFilms={findFilms}/>
-        {isFetching && (<Preloader />)}
+        {isLoading && (<Preloader />)}
         {movies.length > 0
             ? <MoviesCardList
-              count={mountCount}
               movies={movies}
               createMovie={createMovie}
               deleteMovie={deleteMovie}
@@ -56,7 +33,7 @@ function SavedMovies({menuState, movies, createMovie, deleteMovie, moveFilterToS
             />
             : <h2 className='movies__error'>Ничего не найдено!</h2>
         }
-        {(mountCount < movies.length) && <button className="movies__more-btn" onClick={count}>Ещё</button>}
+        {savedMovies.length > 0 && <button className="movies__more-btn" onClick={moveFilterToShow}>Ещё</button>}
       </main>
 
       <Footer/>

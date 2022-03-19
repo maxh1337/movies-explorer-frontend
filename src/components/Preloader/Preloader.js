@@ -1,9 +1,9 @@
-import React from 'react'
-import './Preloader.css'
+import React from 'react';
+import './Preloader.css';
 
-const Preloader = ({isFull = false}) => {
+const Preloader = () => {
     return (
-        <div className={`preloader ${isFull ? 'preloader_full' : ''}`}>
+        <div className="preloader">
             <div className="preloader__container">
                 <span className="preloader__round"></span>
             </div>
@@ -11,5 +11,5 @@ const Preloader = ({isFull = false}) => {
     )
 };
 
-export default Preloader
+export default Preloader;
 

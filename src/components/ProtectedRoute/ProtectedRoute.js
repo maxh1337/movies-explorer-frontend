@@ -6,7 +6,7 @@ const ProtectedRoute = ({ component: Component, ...props }) => {
   return (
     <Route>
       {() =>
-        props.isCheckingToken ? <Preloader isFull={true} /> : props.loggedIn ? <Component {...props} /> : <Redirect to="/sign-in" />
+        props.isCheckingToken ? <Preloader isFull={true} /> : props.loggedIn ? <Component {...props} /> : <Redirect to="/" />
       }
     </Route>
   );
