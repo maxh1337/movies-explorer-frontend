@@ -26,10 +26,16 @@
   color: #8B8B8B;
   margin-bottom: 5px;
 }
+.login-form__section{
+  margin-bottom: 15px;
+}
+.login-form__section:last-of-type{
+  margin-bottom: 0px;
+}
 
 .login-form__input {
   padding: 0 0 10px;
-  margin-bottom: 24px;
+  /* margin-bottom: 14px; */
   width: 100%;
   background: transparent;
 
@@ -49,6 +55,11 @@
   border-bottom: 1px solid #4285F4;
 }
 
+.login-form__input-error {
+  color: #FFFFFF;
+  font-size: 10px;
+  margin-bottom: 15px;
+}
 .login-form__submit {
   cursor: pointer;
   display: block;
