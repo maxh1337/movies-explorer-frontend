@@ -219,7 +219,7 @@ function App() {
       .then(() => {
         setLoggedIn(false);
         setCurrentUser({});
-        setSavedMovies([]);
+        setSavedMovies([]); 
         // TODO возможно придётся убрать
         history.push('/');
       })
