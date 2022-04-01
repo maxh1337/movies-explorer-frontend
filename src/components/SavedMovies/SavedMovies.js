@@ -7,11 +7,20 @@ import Burger from "../Burger/Burger";
 import Preloader from "../Preloader/Preloader";
 import {useEffect} from "react";
 import React from 'react';
+import mainApi from "../../utils/MainApi";
 
-function SavedMovies({menuState, movies, createMovie, deleteMovie, isLoading, moveFilterToShow, savedMovies, findFilms, filterForSaved, isFetching, isFetchingError,}) {
+function SavedMovies({menuState, movies, createMovie, deleteMovie, isLoading, moveFilterToShow, savedMovies, findFilms, filterForSaved, setSavedMovies}) {
+
 
   useEffect(() => {
     filterForSaved()
+  }, [])
+
+  useEffect(() => {
+    mainApi
+      .getSavedMovies()
+      .then(({data}) => setSavedMovies(data))
+      .catch(err => console.log(err))
   }, [])
 
 return (

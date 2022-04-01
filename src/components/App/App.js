@@ -28,11 +28,7 @@ function App() {
   const [filteredMovies, setFilteredMovies] = useState([]);
   const [toShowMovies, setToShowMovies] = useState([]);
   const [cardsInRow, setCardsInRow] = useState(3);
-  const [filter, setFilter] = useState({
-    name: '',
-    shortFilm: false,
-    saved: false
-  });
+
 
   const menuState = useState(false);
   const [currentUser, setCurrentUser] = useState({});
@@ -43,8 +39,15 @@ function App() {
   const [isFetchingError, setIsFetchingError] = useState(false);
   const [once, setOnce] = useState(true);
   const [isCheckingToken, setIsCheckingToken] = useState(true);
-  const [redirect, setRedirect] = useState(false);
-  const [ isLoading, setLoading ] = React.useState(false);
+  const [isLoading, setLoading] = React.useState(false);
+  const [nope, setNope] = React.useState(false)
+  const [filter, setFilter] = useState({
+    name: '',
+    shortFilm: false,
+    saved: false
+  });
+  
+  // const [filterNoSaved, setFilterNoSaved] = React.useState({}) Что делать чтобы избежать ошибки ? JSON.parse(localStorage.getItem('filteredFilms'))
 
   useEffect(() => {
     mainApi
@@ -54,6 +57,7 @@ function App() {
         setLoggedIn(true);
         // setFilter(filterLocalStorage[data._id]);
       })
+      
       .catch(({message}) => {
         console.log('Ошибка при получении данных пользователя', message);
       })
@@ -62,12 +66,6 @@ function App() {
       })
   }, [])
 
-  useEffect(() => {
-    mainApi
-      .getSavedMovies()
-      .then(({data}) => setSavedMovies(data))
-      .catch(err => console.log(err))
-  }, [])
 
   useEffect(() => {
     setCardsInRow(calcCardsInRow());
@@ -79,6 +77,7 @@ function App() {
     }
   }, [])
 
+
   useEffect(() => {
     if (allMovies.length === 0) {
       return
@@ -86,27 +85,50 @@ function App() {
     if (filter.name === undefined) {
       return
     }
-
     setToShowMovies([])
-
+    try {
+      if (localStorage.getItem('filteredFilms')) {
+        setFilter(JSON.parse(localStorage.getItem('filteredFilms')))
+      }
+      const filtered = allMovies.filterNoSaved(movie =>
+        (movie.nameRU.toLowerCase().includes(filter.name.toLowerCase()))
+        && (filter.shortFilm ? isShortFilm(movie.duration) : true)
+        && (filter.saved ? isSaved(movie.id) : true)
+      )
+      const removed = filtered.splice(0, cardsInRow);
+      setFilteredMovies(filtered);
+      setToShowMovies(removed);
+      setOnce(false);
+      if (!filter?.saved && currentUser._id) {
+        setFilterLocalStorage(state => ({
+          ...state,
+          [currentUser._id]: filter
+        }))
+      }
+    } catch (err){
+        console.log(err)
+        setNope(true)
+    }
+    if (nope === true) {
     const filtered = allMovies.filter(movie =>
       (movie.nameRU.toLowerCase().includes(filter.name.toLowerCase()))
       && (filter.shortFilm ? isShortFilm(movie.duration) : true)
       && (filter.saved ? isSaved(movie.id) : true)
     )
     const removed = filtered.splice(0, cardsInRow);
-
     setFilteredMovies(filtered);
     setToShowMovies(removed);
     setOnce(false);
-
     if (!filter?.saved && currentUser._id) {
       setFilterLocalStorage(state => ({
         ...state,
         [currentUser._id]: filter
       }))
     }
+    }
   }, [filter])
+
+
 
   function filterForSaved() {
     setFilter({
@@ -117,10 +139,11 @@ function App() {
   }
 
   function filterForNoSaved() {
+
     setFilter({
       name: filterLocalStorage[currentUser._id]?.name || '',
-      shortFilm: false,
-      saved: false
+      shortFilm: filter.shortFilm,
+      saved: filter.saved
     })
   }
 
@@ -160,6 +183,7 @@ function App() {
       return copyFilteredMovies
     });
   }
+
   function findFilms({name, shortFilm}) {
     name = name.trim();
     if (!name) {
@@ -169,12 +193,6 @@ function App() {
 
     // поиск
     if (allMovies.length > 0) {
-      setFilter(state => ({
-        ...state,
-        name,
-        shortFilm
-      }));
-    } else {
       setLoading(true);
       setIsFetchingError(false);
       moviesApi.getMovies()
@@ -186,15 +204,17 @@ function App() {
           setIsFetchingError(true);
         })
         .finally(() => {
-          setLoading(false);
+          setLoading(false) 
           setFilter(state => ({
             ...state,
             name,
             shortFilm
           }));
+          localStorage.setItem('filteredFilms', JSON.stringify(filter));
         })
     }
   }
+
 
   function handleUpdateProfile(formData) {
     mainApi
@@ -220,6 +240,7 @@ function App() {
         setLoggedIn(false);
         setCurrentUser({});
         setSavedMovies([]); 
+        setLoading(false);
         // TODO возможно придётся убрать
         history.push('/');
       })
@@ -229,6 +250,7 @@ function App() {
   }
 
   function handleRegister(formData) {
+    setLoading(true);
     setIsFetchingFromForm(true);
     mainApi
       .signUp(formData)
@@ -245,29 +267,44 @@ function App() {
         showModal(message, modal.type_error)
       })
       .finally(() => {
+        setLoading(false);
         setIsFetchingFromForm(false);
       })
   }
 
-  function handleLogin(formData) {
+
+  function handleLogin(formData){
+    setLoading(true);
     setIsFetchingFromForm(true);
+    new Promise(function(resolve,reject) {
+      resolve(mainApi.signIn(formData))
+    })
+    .then(({data}) =>{
+      if (data) {
+        setCurrentUser(data);
+        setLoggedIn(true);
+        history.push('/movies');
+      }
+    })
+    .catch(err => console.log(err))
+    .then(() => {
+      mainApi.getSavedMovies().then(({data}) => setSavedMovies(data))
+    })
+    .catch(({message}) => {
+      showModal(message, modal.type_error)
+    })
+    .finally(() => {
+      setLoading(false);
+      setIsFetchingFromForm(false);
+    })
+    }
+
+  useEffect(() => {
     mainApi
-      .signIn(formData)
-      .then(({data}) => {
-        if (data) {
-          setCurrentUser(data)
-          setLoggedIn(true);
-          setRedirect(true);
-          history.push('/movies');
-        }
-      })
-      .catch(({message}) => {
-        showModal(message, modal.type_error)
-      })
-      .finally(() => {
-        setIsFetchingFromForm(false);
-      })
-  }
+      .getSavedMovies()
+      .then(({data}) => setSavedMovies(data))
+      .catch(err => console.log(err))
+  }, [])
 
   function closeModal() {
     setIsOpenModal(false);
@@ -277,6 +314,7 @@ function App() {
     await setModalConfig({message, type});
     await setIsOpenModal(true);
   }
+
 
   return (
     <CurrentUserContext.Provider value={currentUser}>
@@ -294,7 +332,7 @@ function App() {
             loggedIn={loggedIn}
             menuState={menuState}
             component={Movies}
-            loading={isLoading}
+            isLoading={isLoading}
             findFilms={findFilms}
             movies={toShowMovies}
             moveFilterToShow={moveFilterToShow}
@@ -312,7 +350,7 @@ function App() {
           <ProtectedRoute
             path='/saved-movies'
             moveFilterToShow={moveFilterToShow}
-            loading={isLoading}
+            isLoading={isLoading}
             loggedIn={loggedIn}
             menuState={menuState}
             component={SavedMovies}
@@ -339,7 +377,6 @@ function App() {
           {loggedIn 
             ? <Redirect to='/'/>
             : <Register
-              redirect={redirect}
               onRegister={handleRegister}
               isFetching={isFetchingFromForm}
               /> 
@@ -350,7 +387,6 @@ function App() {
             {loggedIn 
             ? <Redirect to='/'/>
             : <Login
-              redirect={redirect}
               onLogin={handleLogin}
               isFetching={isFetchingFromForm}
               />
