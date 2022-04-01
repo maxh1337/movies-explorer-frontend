@@ -18,6 +18,7 @@ import {calcCardsInRow, isShortFilm} from "../../utils/utils";
 import PageNotFound from "../PageNotFound/PageNotFound";
 import { Redirect } from 'react-router-dom';
 import React from "react";
+import { set } from "express/lib/application";
 
 function App() {
   const history = useHistory();
@@ -28,7 +29,7 @@ function App() {
   const [filteredMovies, setFilteredMovies] = useState([]);
   const [toShowMovies, setToShowMovies] = useState([]);
   const [cardsInRow, setCardsInRow] = useState(3);
-
+  const [savedSearchedMovies, setSavedSearchedMovies] = useState([]);
 
   const menuState = useState(false);
   const [currentUser, setCurrentUser] = useState({});
@@ -47,7 +48,11 @@ function App() {
     saved: false
   });
   
-  // const [filterNoSaved, setFilterNoSaved] = React.useState({}) Что делать чтобы избежать ошибки ? JSON.parse(localStorage.getItem('filteredFilms'))
+  const [filterNoSaved, setFilterNoSaved] = useState({
+    name: '',
+    shortFilm: false,
+    saved: false
+  })
 
   useEffect(() => {
     mainApi
@@ -87,38 +92,65 @@ function App() {
     }
     setToShowMovies([])
     try {
-      if (localStorage.getItem('filteredFilms')) {
-        setFilter(JSON.parse(localStorage.getItem('filteredFilms')))
+      if (localStorage.getItem('filteredFilms') && filterForNoSaved.shortFilm !== true) {
+       setFilterNoSaved(JSON.parse(localStorage.getItem('filteredFilms')))
       }
-      const filtered = allMovies.filterNoSaved(movie =>
-        (movie.nameRU.toLowerCase().includes(filter.name.toLowerCase()))
-        && (filter.shortFilm ? isShortFilm(movie.duration) : true)
-        && (filter.saved ? isSaved(movie.id) : true)
-      )
-      const removed = filtered.splice(0, cardsInRow);
-      setFilteredMovies(filtered);
-      setToShowMovies(removed);
+
+      if (localStorage.getItem('searchedFilms')) {
+        setSavedSearchedMovies(localStorage.getItem('searchedFilms'))
+        const removed = savedSearchedMovies.splice(0, cardsInRow)
+        setFilteredMovies(savedSearchedMovies)
+        setToShowMovies(removed)
+      }
+      else {
+        const filtered = allMovies.filterNoSaved(movie =>
+          (movie.nameRU.toLowerCase().includes(filterNoSaved.name.toLowerCase()))
+          && (filterNoSaved.shortFilm ? isShortFilm(movie.duration) : true)
+          && (filterNoSaved.saved ? isSaved(movie.id) : true)
+        )
+        localStorage.setItem('searchedFilms', JSON.stringify(filtered))
+        const removed = filtered.splice(0, cardsInRow);
+        setFilteredMovies(filtered);
+        setToShowMovies(removed);
+      }
+
       setOnce(false);
-      if (!filter?.saved && currentUser._id) {
+      setNope(false)
+
+      if (!filterNoSaved?.saved && currentUser._id) {
         setFilterLocalStorage(state => ({
           ...state,
-          [currentUser._id]: filter
+          [currentUser._id]: filterNoSaved
         }))
       }
-    } catch (err){
+    } 
+    catch (err){
         console.log(err)
         setNope(true)
     }
+
+
     if (nope === true) {
-    const filtered = allMovies.filter(movie =>
-      (movie.nameRU.toLowerCase().includes(filter.name.toLowerCase()))
-      && (filter.shortFilm ? isShortFilm(movie.duration) : true)
-      && (filter.saved ? isSaved(movie.id) : true)
-    )
-    const removed = filtered.splice(0, cardsInRow);
-    setFilteredMovies(filtered);
-    setToShowMovies(removed);
+      if (localStorage.getItem('searchedFilms')) {
+        setSavedSearchedMovies(localStorage.getItem('searchedFilms'))
+        const removed = savedSearchedMovies.splice(0, cardsInRow)
+        setFilteredMovies(savedSearchedMovies)
+        setToShowMovies(removed)
+      }
+      else {
+        const filtered = allMovies.filter(movie =>
+          (movie.nameRU.toLowerCase().includes(filter.name.toLowerCase()))
+          && (filter.shortFilm ? isShortFilm(movie.duration) : true)
+          && (filter.saved ? isSaved(movie.id) : true)
+        )
+        localStorage.setItem('searchedFilms', JSON.stringify(filtered))
+        const removed = filtered.splice(0, cardsInRow);
+        setFilteredMovies(filtered);
+        setToShowMovies(removed);
+      }
+
     setOnce(false);
+
     if (!filter?.saved && currentUser._id) {
       setFilterLocalStorage(state => ({
         ...state,
@@ -139,12 +171,20 @@ function App() {
   }
 
   function filterForNoSaved() {
-
-    setFilter({
-      name: filterLocalStorage[currentUser._id]?.name || '',
-      shortFilm: filter.shortFilm,
-      saved: filter.saved
-    })
+    if (localStorage.getItem('filteredFilms')) {
+      setFilter({
+        name: filterLocalStorage[currentUser._id]?.name || '',
+        shortFilm: filterForNoSaved.shortFilm,
+        saved: false
+      })
+    }
+    else {
+      setFilter({
+        name: '',
+        shortFilm: false,
+        saved: false
+      })
+    }
   }
 
   function isSaved(id) {
@@ -204,7 +244,7 @@ function App() {
           setIsFetchingError(true);
         })
         .finally(() => {
-          setLoading(false) 
+          setLoading(false)
           setFilter(state => ({
             ...state,
             name,
@@ -233,7 +273,8 @@ function App() {
       delete state[currentUser._id]
       return state;
     })
-
+    localStorage.removeItem('filteredFilms')
+    localStorage.removeItem('searchedFilms')
     mainApi
       .signOut()
       .then(() => {
