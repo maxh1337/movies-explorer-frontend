@@ -98,9 +98,9 @@ function App() {
 
       if (localStorage.getItem('searchedFilms')) {
         setSavedSearchedMovies(localStorage.getItem('searchedFilms'))
-        const removed = savedSearchedMovies.splice(0, cardsInRow)
+        // const removed = savedSearchedMovies.splice(0, cardsInRow)
         setFilteredMovies(savedSearchedMovies)
-        setToShowMovies(removed)
+        setToShowMovies(savedSearchedMovies.splice(0, cardsInRow)) //removed
       }
       else {
         const filtered = allMovies.filterNoSaved(movie =>
