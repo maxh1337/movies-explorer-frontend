@@ -18,7 +18,6 @@ import {calcCardsInRow, isShortFilm} from "../../utils/utils";
 import PageNotFound from "../PageNotFound/PageNotFound";
 import { Redirect } from 'react-router-dom';
 import React from "react";
-import { set } from "express/lib/application";
 
 function App() {
   const history = useHistory();
@@ -54,6 +53,22 @@ function App() {
     saved: false
   })
 
+  useEffect(()=> {
+    if (allMovies.length === 0) {
+      moviesApi.getMovies()
+      .then(data => {
+        setAllMovies(data);
+      })
+      .catch(err => {
+        console.log(err);
+        setIsFetchingError(true);
+      })
+      .finally(() => {
+        setLoading(false)
+      })
+    }
+  },[])
+  
   useEffect(() => {
     mainApi
       .getUserInfo()
@@ -98,9 +113,9 @@ function App() {
 
       if (localStorage.getItem('searchedFilms')) {
         setSavedSearchedMovies(localStorage.getItem('searchedFilms'))
-        // const removed = savedSearchedMovies.splice(0, cardsInRow)
+        const removed = savedSearchedMovies.splice(0, cardsInRow)
         setFilteredMovies(savedSearchedMovies)
-        setToShowMovies(savedSearchedMovies.splice(0, cardsInRow)) //removed
+        setToShowMovies(removed) //removed 
       }
       else {
         const filtered = allMovies.filterNoSaved(movie =>
@@ -133,9 +148,9 @@ function App() {
     if (nope === true) {
       if (localStorage.getItem('searchedFilms')) {
         setSavedSearchedMovies(localStorage.getItem('searchedFilms'))
-        const removed = savedSearchedMovies.splice(0, cardsInRow)
         setFilteredMovies(savedSearchedMovies)
-        setToShowMovies(removed)
+        const removed = savedSearchedMovies.splice(0, cardsInRow)
+        setToShowMovies(removed) //removed
       }
       else {
         const filtered = allMovies.filter(movie =>
