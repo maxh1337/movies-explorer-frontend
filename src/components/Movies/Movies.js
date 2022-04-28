@@ -24,6 +24,7 @@ function Movies(
     savedMovies,
     filterForNoSaved,
     searchString,
+    shortFilm
   }) {
 
   useEffect(() => {
@@ -39,7 +40,7 @@ function Movies(
       </Header>
 
       <main className="content">
-        <SearchForm findFilms={findFilms} searchString={searchString}/>
+        <SearchForm findFilms={findFilms} searchString={searchString} shortFilm={shortFilm}/>
         {isLoading && <Preloader/>}
         {isFetchingError
           ? <>

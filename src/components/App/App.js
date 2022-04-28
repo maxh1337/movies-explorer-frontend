@@ -28,8 +28,7 @@ function App() {
   const [filteredMovies, setFilteredMovies] = useState([]);
   const [toShowMovies, setToShowMovies] = useState([]);
   const [cardsInRow, setCardsInRow] = useState(3);
-  const [savedSearchedMovies, setSavedSearchedMovies] = useState([]);
-
+  // const [filterShortFilm, setFilterShortFilm] = useLocalStorage(LOCAL_STORAGE_KEY_SHORTFILM, {});
   const menuState = useState(false);
   const [currentUser, setCurrentUser] = useState({});
   const [loggedIn, setLoggedIn] = useState(false);
@@ -40,7 +39,6 @@ function App() {
   const [once, setOnce] = useState(true);
   const [isCheckingToken, setIsCheckingToken] = useState(true);
   const [isLoading, setLoading] = React.useState(false);
-  const [nope, setNope] = React.useState(false)
   const [filter, setFilter] = useState({
     name: '',
     shortFilm: false,
@@ -48,7 +46,7 @@ function App() {
   });
   
   const [filterNoSaved, setFilterNoSaved] = useState({
-    name: '',
+    name: '', 
     shortFilm: false,
     saved: false
   })
@@ -105,65 +103,18 @@ function App() {
     if (filter.name === undefined) {
       return
     }
+
     setToShowMovies([])
-    try {
-      if (localStorage.getItem('filteredFilms') && filterForNoSaved.shortFilm !== true) {
-       setFilterNoSaved(JSON.parse(localStorage.getItem('filteredFilms')))
-      }
 
-      if (localStorage.getItem('searchedFilms')) {
-        setSavedSearchedMovies(localStorage.getItem('searchedFilms'))
-        const removed = savedSearchedMovies.splice(0, cardsInRow)
-        setFilteredMovies(savedSearchedMovies)
-        setToShowMovies(removed) //removed 
-      }
-      else {
-        const filtered = allMovies.filterNoSaved(movie =>
-          (movie.nameRU.toLowerCase().includes(filterNoSaved.name.toLowerCase()))
-          && (filterNoSaved.shortFilm ? isShortFilm(movie.duration) : true)
-          && (filterNoSaved.saved ? isSaved(movie.id) : true)
-        )
-        localStorage.setItem('searchedFilms', JSON.stringify(filtered))
-        const removed = filtered.splice(0, cardsInRow);
-        setFilteredMovies(filtered);
-        setToShowMovies(removed);
-      }
+    const filtered = allMovies.filter(movie =>
+      (movie.nameRU.toLowerCase().includes(filter.name.toLowerCase()))
+      && (filter.shortFilm ? isShortFilm(movie.duration) : true)
+      && (filter.saved ? isSaved(movie.id) : true)
+    )
+    const removed = filtered.splice(0, cardsInRow);
 
-      setOnce(false);
-      setNope(false)
-
-      if (!filterNoSaved?.saved && currentUser._id) {
-        setFilterLocalStorage(state => ({
-          ...state,
-          [currentUser._id]: filterNoSaved
-        }))
-      }
-    } 
-    catch (err){
-        console.log(err)
-        setNope(true)
-    }
-
-
-    if (nope === true) {
-      if (localStorage.getItem('searchedFilms')) {
-        setSavedSearchedMovies(localStorage.getItem('searchedFilms'))
-        setFilteredMovies(savedSearchedMovies)
-        const removed = savedSearchedMovies.splice(0, cardsInRow)
-        setToShowMovies(removed) //removed
-      }
-      else {
-        const filtered = allMovies.filter(movie =>
-          (movie.nameRU.toLowerCase().includes(filter.name.toLowerCase()))
-          && (filter.shortFilm ? isShortFilm(movie.duration) : true)
-          && (filter.saved ? isSaved(movie.id) : true)
-        )
-        localStorage.setItem('searchedFilms', JSON.stringify(filtered))
-        const removed = filtered.splice(0, cardsInRow);
-        setFilteredMovies(filtered);
-        setToShowMovies(removed);
-      }
-
+    setFilteredMovies(filtered);
+    setToShowMovies(removed);
     setOnce(false);
 
     if (!filter?.saved && currentUser._id) {
@@ -172,10 +123,7 @@ function App() {
         [currentUser._id]: filter
       }))
     }
-    }
   }, [filter])
-
-
 
   function filterForSaved() {
     setFilter({
@@ -189,7 +137,7 @@ function App() {
     if (localStorage.getItem('filteredFilms')) {
       setFilter({
         name: filterLocalStorage[currentUser._id]?.name || '',
-        shortFilm: filterForNoSaved.shortFilm,
+        shortFilm: filterLocalStorage[currentUser._id]?.shortFilm || '',
         saved: false
       })
     }
@@ -245,7 +193,6 @@ function App() {
       showModal('Нужно ввести ключевое слово', modal.type_error);
       return;
     }
-
     // поиск
     if (allMovies.length > 0) {
       setLoading(true);
@@ -401,6 +348,7 @@ function App() {
             isCheckingToken={isCheckingToken}
             filterForNoSaved={filterForNoSaved}
             searchString={filterLocalStorage[currentUser._id]?.name}
+            shortFilm={filterLocalStorage[currentUser._id]?.shortFilm}
           />
 
           <ProtectedRoute
@@ -417,6 +365,7 @@ function App() {
             findFilms={findFilms}
             filterForSaved={filterForSaved}
             isCheckingToken={isCheckingToken}
+            setSavedMovies={setSavedMovies}
           />
 
           <ProtectedRoute
