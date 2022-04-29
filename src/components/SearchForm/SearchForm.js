@@ -3,13 +3,14 @@ import FilterCheckbox from '../FilterCheckbox/FilterCheckbox';
 import {useFormWithValidation} from "../../utils/form-validation";
 import {useEffect} from "react";
 
-function SearchForm({findFilms, searchString}) {
-  const { values, handleChange, resetForm } = useFormWithValidation();
 
+
+function SearchForm({findFilms, searchString, shortFilm}) {
+  const { values, handleChange, resetForm } = useFormWithValidation();
   useEffect(() => {
     resetForm({
       name: searchString || '',
-      shortFilm: false
+      shortFilm: shortFilm,
     })
   }, [])
 

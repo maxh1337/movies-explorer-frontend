@@ -12,7 +12,6 @@ import React from 'react';
 function Movies(
   {
     menuState,
-    isFetching,
     findFilms,
     movies,
     isLoading,
@@ -25,11 +24,13 @@ function Movies(
     savedMovies,
     filterForNoSaved,
     searchString,
+    shortFilm
   }) {
 
   useEffect(() => {
     filterForNoSaved();
   }, [])
+
 
   return (
     <>
@@ -39,8 +40,7 @@ function Movies(
       </Header>
 
       <main className="content">
-        <SearchForm findFilms={findFilms} searchString={searchString}/>
-
+        <SearchForm findFilms={findFilms} searchString={searchString} shortFilm={shortFilm}/>
         {isLoading && <Preloader/>}
         {isFetchingError
           ? <>

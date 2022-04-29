@@ -11,6 +11,7 @@ export const validationConfig = {
 
 export const LOCAL_STORAGE_KEY_MOVIES = 'movies';
 export const LOCAL_STORAGE_KEY_FILTER = 'filter';
+export const LOCAL_STORAGE_KEY_SHORTFILM = 'shortfilm';
  
 export const modal = {
   type_ok: 'ok',
